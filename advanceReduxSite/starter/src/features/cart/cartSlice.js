@@ -14,11 +14,27 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cartItem = [];
     },
+    removeItem: (state, action) => {
+      const itemID = action.payload;
+      state.cartItem = state.cartItem.filter((items) => items.id !== itemID);
+    },
+    increase: (state, { payload }) => {
+      const singleCartItem = state.cartItem.find(
+        (item) => item.id === payload.id
+      );
+      singleCartItem.amount = singleCartItem.amount + 1;
+    },
+    decrease: (state, { payload }) => {
+      const singleCartItem = state.cartItem.find(
+        (item) => item.id === payload.id
+      );
+      singleCartItem.amount = singleCartItem.amount - 1;
+    },
   },
 });
 
 console.log(cartSlice);
 
-export const { clearCart } = cartSlice.actions;
+export const { clearCart, removeItem, increase, decrease } = cartSlice.actions;
 
 export default cartSlice.reducer;
